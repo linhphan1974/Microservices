@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Books";
+    
+}
+@model BookOnline.MvcClient.ViewModels.BooksViewModel;
+
+<div class="card card-solid">
+    <div class="card-body pb-0">
+        <div class="row">
+            @foreach (var item in Model.BookItems)
+            {
+                <partial name="_book" model=item/>
+            }
+        </div>
+    </div>
+</div>
+

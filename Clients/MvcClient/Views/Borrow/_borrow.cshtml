@@ -1,0 +1,44 @@
+﻿@model BookOnline.MvcClient.Models.Borrow
+@{
+    var shipText = Model.ShipType == 0 ? "Pickup" : "Shipping";
+}
+<div class="card card-solid">
+    <div class="card-body pb-0">
+        <div class="row">
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-3">@Model.BorrowDate.ToShortDateString()</div>
+                        <div class="col-md-1">Total Items: @Model.Items.Count()</div>
+                        <div class="col-md-4">Delivery method: @shipText</div>
+                        <div class="col-md-2"><a asp-action="BorrowDetail" asp-controller="Borrow"><span class="text">Borrow Details</span></a></div>
+                        <div class="col-md-2"><a asp-action="Receipt" asp-controller="Borrow"><span class="text">Receipt</span></a></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="table-responsive">
+                                <table class="table">
+                            @foreach(var i in Model.Items)
+                                    {
+                                    <tr>
+                                        <td><img src="@i.PictureUrl" class="img-size-50 mr-3"></td>
+                                        <td><h5 class="dropdown-item-title">@i.Title</h5></td>
+                                    </tr>   
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group clearfix">
+                                <a class="btn btn-warning btn-sm" asp-action="BorrowStatus" asp-controller="Borrow"><span class="text">Track Status</span></a>
+                                <a class="btn btn-default btn-sm" asp-action="Cancel" asp-controller="Borrow"><span class="text">Track Status</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

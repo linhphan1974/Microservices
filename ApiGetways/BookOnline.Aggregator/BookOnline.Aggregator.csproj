@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>ea83b4d0-c3d8-45d2-92c1-4c34dad729dd</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\..\Services\Basket.Api\Proto\Basket.proto" GrpcServices="Client">
+      <Link>Protos\Basket.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\..\Services\Book.Api\Proto\Book.proto" GrpcServices="Client">
+      <Link>Protos\Book.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\..\Services\Borrow.Api\Proto\Borrow.proto" GrpcServices="Client">
+      <Link>Protos\Borrow.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+
+</Project>

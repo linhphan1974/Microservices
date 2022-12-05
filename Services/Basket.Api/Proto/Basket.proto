@@ -1,0 +1,41 @@
+syntax = "proto3";
+package BasketApi;
+option csharp_namespace = "GrpcBasket";
+import "google/protobuf/timestamp.proto";
+
+service Basket
+{
+	rpc GetBasketById(BasketRequest) returns (BasketResponse){}
+	rpc UpdateBasket(UpdateBasketRequest) returns (BasketResponse){}
+}
+
+message BasketRequest
+{
+	string BasketId = 1;
+}
+
+message UpdateBasketRequest
+{
+	string BasketId = 1;
+	repeated BasketItemResponse Items = 2;
+}
+
+message BasketsResponse
+{
+	repeated BasketResponse data = 1;
+}
+
+message BasketResponse
+{
+	string BasketId = 1;
+	repeated BasketItemResponse Items = 2;
+}
+
+message BasketItemResponse
+{
+	string Id = 1;
+	int32 BookId = 2;
+	string BookName = 3;
+	string BookCode = 4;
+	string PictureUrl = 5;
+}

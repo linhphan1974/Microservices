@@ -1,0 +1,134 @@
+﻿@model BookOnline.MvcClient.Models.PagingModel
+<div class="row" data-pageindex="1">
+@*    <input type="hidden" id="current-sort-column" value="@Model.SortColumn" />
+    <input type="hidden" id="current-sort-dir" value="@Model.SortDirection" />
+*@    
+    <input type="hidden" id="current-index" value="@Model.PageIndex" />
+    <div class="col-md-6 pull-left">
+        <div class="col-md-2">
+            <label>Show </label>
+        </div>
+        <div class="col-md-5">
+            <select class="form-control input-sm" id="page-size" onchange="changeSize(this);">
+                <!option value="3" @(Model.PageSize == 3 ? "selected" : "")>3</!option>
+                <!option value="5" @(Model.PageSize == 5 ? "selected" : "")>5</!option>
+                <!option value="20" @(Model.PageSize == 20 ? "selected" : "")>20</!option>
+                <!option value="30" @(Model.PageSize == 30 ? "selected" : "")>30</!option>
+                <!option value="40" @(Model.PageSize == 40 ? "selected" : "")>40</!option>
+                <!option value="50" @(Model.PageSize == 50 ? "selected" : "")>50</!option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <label> rows </label>
+        </div>
+    </div>
+
+    @{
+        var PageIndex = (Model.PageIndex);
+        var ItemStart = (((PageIndex * Model.PageSize) - Model.PageSize));
+        var ItemEnd = (ItemStart + Model.PageSize);
+        var Itemfinal = ((Model.TotalRows - Model.PageSize) + Model.PageSize);
+
+    }
+    @if (Model.TotalRows != null && Model.TotalRows != 1)
+    {
+        <div class="col-md-6">
+            <div class="col-md-4">
+                <span class="pull-left" style="margin-right: 10px;">
+                    @if (PageIndex == 1)
+                    {
+                        @PageIndex
+                    }
+                    else
+                    {
+                        @ItemStart
+                    }
+
+                    -
+
+                    @if (ItemEnd > Model.TotalRows)
+                    {
+                        @Itemfinal
+                    }
+                    else
+                    {
+                        @ItemEnd
+                    }
+                    /@Model.TotalRows
+                </span>
+            </div>
+            <div class="col-md-8">
+                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                    <ul class="pagination">
+                        @if(Model.PageIndex == 1)
+                        {
+                        <li class="paginate_button page-item previous disabled" id="paging_previous">
+                            <a href="#" aria-controls="" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                        </li>
+                        }
+                        else
+                        {
+                        <li class="paginate_button page-item previous" id="paging-previous">
+                            <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                        </li>
+                        }
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="paginate_button page-item active">
+                                <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">@i</a>
+                            </li>
+                        }
+                        @if (Model.PageIndex == Model.TotalPages)
+                        {
+                            <li class="paginate_button page-item next disabled" id="paging_next">
+                                <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                            </li>
+                        }
+                        else
+                        {
+                             <li class="paginate_button page-item next" id="paging_next">
+                                <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+@*                <ul class="pagination pagination-sm no-margin pull-right">
+                    @if (Model.PageIndex == 0)
+                    {
+                        <li class="disabled"><a class="paging_item_button">Next</a></li>
+                    }
+                    else
+                    {
+                        <li><a id="previous_button" class="paging_item_button">Next</a></li>
+                    }
+                    @for (int i = 0; i <= Model.TotalPages; i++)
+                    {
+                        if (i == Model.PageIndex)
+                        {
+                            <li class="disabled">
+                                <span>@i</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a id="@i" class="paging_item_button" onclick="changePage(@i);">@i</a>
+                            </li>
+                        }
+                    }
+                    @if (Model.PageIndex == Model.TotalPages)
+                    {
+                        <li class="disabled"><a class="paging_item_button"><span>Previous</span></a></li>
+                    }
+                    else
+                    {
+                        <li><a id="next_button" class="paging_item_button">Previous</a></li>
+                    }
+
+                </ul>
+*@            </div>
+        </div>
+    }
+
+</div>
+

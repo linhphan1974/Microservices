@@ -1,0 +1,81 @@
+﻿@model BookOnline.MvcClient.Models.Borrow
+<form asp-action="Checkout" asp-controller="Borrow">
+<div class="card card-solid">
+    <div class="card-body pb-0">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h4>Borrow Detail</h4>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                @foreach(var i in Model.Items)
+                                        {
+                                        <tr>
+                                            <td><img src="@i.PictureUrl" class="img-size-50 mr-3"></td>
+                                            <td><h5 class="dropdown-item-title">@i.Title</h5></td>
+                                        </tr>   
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <h4>Shipping method</h4>
+                                <div class="form-group clearfix">
+                                  <div class="icheck-primary">
+                                    <input type="radio" id="ship" name="method" asp-for="ShipType" value="0">
+                                    <label for="ship">Ship to my address
+                                    </label>
+                                  </div>
+                                  <div class="icheck-primary">
+                                    <input type="radio" id="pickup" name="method" asp-for="ShipType" value="1">
+                                    <label for="pickup">I will pickup
+                                    </label>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <h4>Borrow Summary</h4>
+                        <div class="col-12">
+                            <p class="lead">Amount Due @DateTime.Today.Date.ToString()</p>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    @foreach(var item in Model.Items)
+                                    {
+                                    <tr>
+                                        <th style="width:50%">@item.Title</th>
+                                        <td>
+                                            <div class="media">
+                                                <img src="@item.PictureUrl" class="img-size-50 mr-3">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h3 class="dropdown-item-title">
+                                                <span class="float-right text-sm">1</span>
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                <div class="card-footer">
+                    <div class="text-right">
+                        <input type="submit" class="btn btn-sm btn-primary" value="Checkout"/>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>

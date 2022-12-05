@@ -1,0 +1,41 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "GrpcBorrow";
+package BorrowApi;
+
+service Borrowing {
+  rpc CreateDraftBorrow (BorrowDraftRequest) returns (BorrowResponse) {}
+}
+
+message BorrowDraftRequest{
+	string MemberId = 1;
+	repeated BasketItem Items = 2;
+}
+
+message BasketItem
+{
+	int32 Id  = 1;
+    int32 BookId = 2;
+    string BookName = 3;
+    string BookCode = 4;
+    string PictureUrl = 5;
+}
+
+message BorrowResponse{
+	int32 Id = 1;
+	int32 MemberId = 2;
+	google.protobuf.Timestamp BorrowDate = 3;
+	google.protobuf.Timestamp PickupDate = 4;
+	google.protobuf.Timestamp ReturnDate = 5;
+	int32 BorrowStatus = 6;
+	repeated BorrowItemResponse Items=7;
+}
+
+message BorrowItemResponse
+{
+	int32 Id=1;
+	int32 BookId=2;
+	string Title=3;
+	string PictureUrl=4;
+	int32 BorrowId=5;
+}

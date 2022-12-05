@@ -1,0 +1,39 @@
+﻿@model BookOnline.MvcClient.Models.Borrow
+
+<div class="col-md-4">
+    <div class="card card-default">
+        <div class="card-body">
+            <h4>Borrow Summary</h4>
+            <div class="col-12">
+                <p class="lead">Amount Due @DateTime.Today.Date.ToString()</p>
+                <div class="table-responsive">
+                    <table class="table">
+                        @foreach(var item in Model.Items)
+                        {
+                        <tr>
+                            <th style="width:50%">@item.Title</th>
+                            <td>
+                                <div class="media">
+                                    <img src="@item.PictureUrl" class="img-size-50 mr-3">
+                                </div>
+                            </td>
+                            <td>
+                                <h3 class="dropdown-item-title">
+                                    <span class="float-right text-sm">1</span>
+                                </h3>
+                            </td>
+                        </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="text-right">
+                <a asp-action="Create" asp-controller="Borrow" class="btn btn-sm btn-primary" data-book-id="@Model.Id">
+                    Checkout
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

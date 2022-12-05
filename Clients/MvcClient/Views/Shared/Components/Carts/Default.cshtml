@@ -1,0 +1,23 @@
+﻿@model BookOnline.MvcClient.Models.Cart
+
+@foreach(var item in Model.Items)
+{
+<div class="col-md-8">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <h2 class="lead"><b>@item.BookName</b></h2>
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Code: @item.BookCode</li>
+                    </ul>
+                </div>
+                <div class="col-6 text-center">
+                    <img src="@item.PictureUrl" alt="" class="img-fluid img-size-64 mr-3 img-md">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+

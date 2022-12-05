@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>BookOnline.Book.Api</AssemblyName>
+    <RootNamespace>BookOnline.Book.Api</RootNamespace>
+    <UserSecretsId>24be4841-4694-4a42-9483-b320be6a102d</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Infrastucture\EventHandlers\BorrowCancelEventHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Proto\Book.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.47.0" />
+	<PackageReference Include="Google.Protobuf" Version="3.21.4" />
+	<PackageReference Include="Grpc.AspNetCore.Server" Version="2.47.0" />
+	<PackageReference Include="Grpc.Tools" Version="2.47.0" />
+	<PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
+	<PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+	<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+	<PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
+	<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+	<PackageReference Include="Serilog.Sinks.Http" Version="8.0.0" />
+	<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Picture\" />
+    <Folder Include="Setup\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\EventBus\RabbitMQEventBus\RabbitMQEventBus.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Proto\Book.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+</Project>

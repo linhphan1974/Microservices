@@ -1,0 +1,84 @@
+﻿@model BookOnline.MvcClient.ViewModels.BorrowSearchViewModel
+@section Scripts
+{
+  <script src="@Url.Content("~/application/borrow.js")"></script>
+}
+
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">Borrow Search</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+            </button>
+        </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control select2" style="width: 100%;" id="statusSearchSelect">
+                        @foreach(var status in Model.StatusList)
+                        {
+                            <!option @(status.Key == Model.Status.Value ? "selected" : "")  value="@status.Key">@status.Value</!option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                  <label>Borrow Date:</label>
+                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="borrowDateSearch" value="@Model.BorrowDate"/>
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <button class="btn btn-default" ><i class="fa fa-search" id="btn-search-borrow"></i></button>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+    <div class="card">
+        <div class="card-header">
+        <h3 class="card-title">DataTable with minimal features & hover style</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+        <table id="tblBorrow" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Borrow Date</th>
+                    <th>Status</th>
+                    <th>Pickedup Dtae</th>
+                    <th>Returned Date</th>
+                    <th>Cancel Date</th>
+                    <th>Shiiping Type</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <partial name="_BorrowBody" model=Model.Borrows />
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <partial name="_pagingPartial" model="Model.Pagination" />
+        </div>
+    </div>
+        

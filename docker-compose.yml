@@ -1,0 +1,162 @@
+version: '3.4'
+
+services:
+  envoygetway:
+    image: envoyproxy/envoy:v1.20-latest
+    container_name: book_online_getways
+    build :
+      context: .
+      dockerfile: ApiGetways/Envoy/Dockerfile
+    ports:
+      - "9901:9901"
+      - "10000:10000"
+    volumes:
+      - ./ApiGetways/Envoy/envoy.yaml:/etc/ssl/envoy/envoy.yaml
+
+
+  book_online_database: 
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: book_online_database
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"
+    ports: 
+     - 1433:1433
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+     - 5672:5672
+     - 15672:15672
+    healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:15672"]
+     interval: 30s
+     timeout: 10s
+     retries: 5
+
+  redis:
+    image: redis:latest
+    container_name: redis_server
+    ports:
+     - 6379:6379
+     - 16379:16379
+
+  bookonline.aggregator:
+    image: aggregator
+    container_name: aggregatorapi
+    build:
+      context: .
+      dockerfile: ApiGetways/BookOnline.Aggregator/Dockerfile
+    ports: 
+     - 8001:80
+    restart: on-failure
+    depends_on:
+     - basket.api
+     - borrowing.api
+     - book.api
+     - identityserver
+
+  mvcclient:
+    image: bookonline_client
+    container_name: mvc_client
+    build:
+      context: .
+      dockerfile: Clients/MvcClient/Dockerfile
+    ports:
+     - 8003:80
+    restart: on-failure
+    depends_on:
+     - basket.api
+     - borrowing.api
+     - book.api
+     - bookonline.aggregator
+
+  basket.api:
+    image: basketapi
+    container_name: basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket.Api/Dockerfile
+    ports:
+     - "8013:80"
+    restart: on-failure
+    depends_on:
+     - rabbitmq
+     - redis
+     - identityserver
+    links: 
+     - rabbitmq  
+
+
+  book.api:
+    image: bookapi
+    container_name: bookapi
+    build:
+      context: .
+      dockerfile: Services/Book.Api/Dockerfile
+    ports:
+     - 8005:80
+    restart: on-failure
+    depends_on:
+     - rabbitmq
+     - book_online_database
+    links: 
+     - rabbitmq  
+
+  borrowing.api:
+    image: borrowingapi
+    container_name: borrowingapi
+    build:
+      context: .
+      dockerfile: Services/Borrow.Api/Dockerfile
+    ports:
+     - 8007:80
+    restart: on-failure
+    depends_on:
+     - rabbitmq
+     - identityserver
+     - book_online_database
+    links: 
+     - rabbitmq  
+
+  borrowing.backgroundtask:
+    image: borrowingbackgroundtask
+    container_name: borrowingbackgroundtask
+    build:
+      context: .
+      dockerfile: Services/Borrowing.BackgroundService/Dockerfile
+    restart: on-failure
+    depends_on:
+     - rabbitmq
+     - book_online_database
+    links: 
+     - rabbitmq  
+
+  borrownotification.api:
+    image: notificationapi
+    container_name: notificationapi
+    build:
+      context: .
+      dockerfile: Services/BorrowNotification.Api/Dockerfile
+    ports:
+     - 8009:80
+    restart: on-failure
+    depends_on:
+     - rabbitmq
+     - identityserver
+    links: 
+     - rabbitmq  
+
+  identityserver:
+    image: identityserver
+    container_name: identityserver
+    build:
+      context: .
+      dockerfile: Services/IdentityServer/Dockerfile
+    ports:
+     - 8011:80
+    restart: on-failure
+    depends_on:
+     - book_online_database
+

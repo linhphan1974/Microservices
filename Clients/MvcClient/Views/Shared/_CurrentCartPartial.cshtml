@@ -1,0 +1,25 @@
+﻿@model BookOnline.MvcClient.Models.Cart
+<a class="nav-link" data-toggle="dropdown" href="#">
+    <i class="fas fa-cart-plus"></i>
+    <span class="badge badge-info navbar-badge current-cart">@Model.Items.Count()</span>
+</a>
+<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+    <span class="dropdown-item dropdown-header current-cart-item">@Model.Items.Count() items in your cart</span>
+    @foreach(var i in Model.Items)
+    {
+    <div class="dropdown-divider"></div>
+    <a href="#" class="dropdown-item">
+    <div class="media">
+        <img src="@i.PictureUrl" class="img-size-50 mr-3">
+        <div class="media-body">
+        <h3 class="dropdown-item-title">
+            @i.BookName
+            <span class="float-right text-sm"><i class="fas fa-star"></i></span>
+        </h3>
+       </div>
+    </div>
+    </a>
+    }
+    <div class="dropdown-divider"></div>
+    <a asp-action="Index" asp-controller="Cart" class="dropdown-item dropdown-footer">View Cart</a>
+</div>

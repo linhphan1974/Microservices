@@ -1,0 +1,59 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "GrpcBook";
+package BookApi;
+
+service Book
+{
+    rpc GetBookById(BookRequest) returns (BookResponse){}
+    rpc GetBookTypeById(BookTypeRequest) returns (BookTypeResponse){}
+    rpc GetBookCatalogById(BookCatalogRequest) returns (BookCatalogResponse){}
+}
+
+message BookRequest
+{
+	int32 BookId = 1;
+}
+
+message BookTypeRequest
+{
+	int32 BookTypeId = 1;
+}
+
+message BookCatalogRequest
+{
+	int32 BookCatalogId = 1;
+}
+
+message BookResponse
+{
+    int32 Id = 1;
+ 	string ISBN = 2;
+    google.protobuf.Timestamp FirstPublish = 3;
+    string Version = 4;
+    string Title = 5;
+    string Description = 6;
+    int32 CatalogId = 7;
+    int32 BookTypeId = 8;
+    string Publisher = 9;
+    string Author = 10;
+    int32 Status = 11;
+    int32 Quantity = 12;
+    string PictureUrl = 13;
+    BookCatalogResponse Catalog = 14;
+    BookTypeResponse BookType = 15;
+}
+
+message BookTypeResponse
+{
+    int32 Id = 1;
+    int32 Type = 2;
+    string Name = 3;
+}
+
+message BookCatalogResponse
+{
+    int32 id = 1;
+    string Name = 2;
+    string Description = 3;
+}

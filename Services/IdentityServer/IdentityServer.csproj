@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>7e8288a6-f8e9-4294-8ed8-bcea6a096b87</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Quickstart\**" />
+    <Compile Remove="Views\Device\**" />
+    <Compile Remove="Views\Diagnostics\**" />
+    <Compile Remove="Views\Grants\**" />
+    <Content Remove="Quickstart\**" />
+    <Content Remove="Views\Device\**" />
+    <Content Remove="Views\Diagnostics\**" />
+    <Content Remove="Views\Grants\**" />
+    <EmbeddedResource Remove="Quickstart\**" />
+    <EmbeddedResource Remove="Views\Device\**" />
+    <EmbeddedResource Remove="Views\Diagnostics\**" />
+    <EmbeddedResource Remove="Views\Grants\**" />
+    <None Remove="Quickstart\**" />
+    <None Remove="Views\Device\**" />
+    <None Remove="Views\Diagnostics\**" />
+    <None Remove="Views\Grants\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="4.1.2" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\theme\dist\css\adminlte.css.map" />
+    <None Include="wwwroot\theme\dist\css\adminlte.min.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.components.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.components.min.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.core.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.core.min.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.extra-components.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.extra-components.min.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.light.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.light.min.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.pages.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.pages.min.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.plugins.css.map" />
+    <None Include="wwwroot\theme\dist\css\alt\adminlte.plugins.min.css.map" />
+    <None Include="wwwroot\theme\dist\js\adminlte.js" />
+    <None Include="wwwroot\theme\dist\js\adminlte.js.map" />
+    <None Include="wwwroot\theme\dist\js\adminlte.min.js" />
+    <None Include="wwwroot\theme\dist\js\adminlte.min.js.map" />
+    <None Include="wwwroot\theme\dist\js\demo.js" />
+    <None Include="wwwroot\theme\dist\js\pages\dashboard.js" />
+    <None Include="wwwroot\theme\dist\js\pages\dashboard2.js" />
+    <None Include="wwwroot\theme\dist\js\pages\dashboard3.js" />
+    <None Include="wwwroot\theme\plugins\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\theme\plugins\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\theme\plugins\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\theme\plugins\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\theme\plugins\fontawesome-free\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\theme\plugins\fontawesome-free\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\theme\plugins\icheck-bootstrap\LICENSE" />
+  </ItemGroup>
+
+</Project>

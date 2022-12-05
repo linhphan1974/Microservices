@@ -1,0 +1,89 @@
+﻿@using BookOnline.MvcClient.Models
+@model List<BookOnline.MvcClient.Models.Borrow>
+
+    @foreach(var borrow in Model)
+    {
+        var shipTypeText = "Pickup";
+        var statusText = string.Empty;
+
+        switch(borrow.BorrowStatus)
+        {
+            case (int)BorrowStatus.Cancel:
+                statusText = "Cancelled";
+                break;
+            case (int)BorrowStatus.Confirmed:
+                statusText = "Confirmed";
+                break;
+            case (int)BorrowStatus.Delivered:
+                statusText = "Delivered";
+                break;
+            case (int)BorrowStatus.PickedUp:
+                statusText = "Pickedup";
+                break;
+            case (int)BorrowStatus.Rejected:
+                statusText = "Rejected";
+                break;
+            case (int)BorrowStatus.Returned:
+                statusText = "Returned";
+                break;
+            case (int)BorrowStatus.Shipped:
+                statusText = "Shipped";
+                break;
+            case (int)BorrowStatus.Submited:
+                statusText = "Submitted";
+                break;
+            case (int)BorrowStatus.WaitForConfirm:
+                statusText = "Wait for confirm";
+                break;
+            case (int)BorrowStatus.WaitForPickup:
+                statusText = "Wait for pickup";
+                break;
+            case (int)BorrowStatus.WaitForShip:
+                statusText = "Wait for ship";
+                break;
+            default:
+                break;
+        }
+
+        if(borrow.ShipType == (int)ShipType.Shipping)
+        {
+            shipTypeText = "Shipping";
+        }
+        <tr>
+            <td>@borrow.BorrowDate.ToShortDateString()</td>
+            <td>@statusText</td>
+            <td>@borrow.PickupDate.ToShortDateString()</td>
+            <td>@borrow.ReturnDate.ToShortDateString()</td>
+            <td>@borrow.CancelDate.ToShortDateString()</td>
+            <td>@shipTypeText</td>
+            <td>@borrow.Description</td>
+            <td>
+                <div class="btn-group">
+                    @if (borrow.BorrowStatus == (int)BorrowStatus.WaitForPickup)
+                    {
+                        <button class="btn-primary btn-sm btn-pickup" data-id="@borrow.Id">Pickup</button>
+                    }
+                    else if(borrow.BorrowStatus == (int)BorrowStatus.WaitForShip)
+                    {
+                        <button class="btn-primary btn-sm btn-ship" data-id="@borrow.Id">Ship</button>
+                    }
+                    @if(borrow.BorrowStatus == (int)BorrowStatus.PickedUp || borrow.BorrowStatus == (int)BorrowStatus.Delivered)
+                    {
+                        <button class="btn-success btn-sm btn-return" data-id="@borrow.Id">Return</button>
+                    }
+                    @if(borrow.BorrowStatus == (int)BorrowStatus.Confirmed && borrow.ShipType == (int)ShipType.Shipping)
+                    {
+                        <button class="btn-info btn-sm btn-wait-for-ship" data-id="@borrow.Id">Ready For Ship</button>
+                    }
+                    else if(borrow.BorrowStatus == (int)BorrowStatus.Confirmed && borrow.ShipType == (int)ShipType.Pickup)
+                    {
+                        <button class="btn-info btn-sm btn-wait-for-pickup" data-id="@borrow.Id">Ready For Pickup</button>
+                    }
+                    @if(borrow.BorrowStatus != (int)BorrowStatus.PickedUp && borrow.BorrowStatus != (int)BorrowStatus.Delivered)
+                    {
+                        <button class="btn-light btn-sm btn-cancel" data-id="@borrow.Id">Cancel</button>
+                    }
+                </div>
+            </td>
+        </tr>
+    }

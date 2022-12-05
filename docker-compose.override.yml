@@ -1,0 +1,103 @@
+version: '3.4'
+
+services:
+  bookonline.aggregator:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - GrpcBasketUrl=http://basket.api:81
+      - GrpcBorrowUrl=http://borrowing.api:81
+      - GrpcBookUrl=http://book.api:81
+      - IdentityUrl=http://host.docker.internal:8011
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  mvcclient:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - BasketUrl=http://host.docker.internal:8013
+      - BorrowUrl=http://host.docker.internal:8007
+      - BookUrl=http://host.docker.internal:8005
+      - IdentityUrl=http://host.docker.internal:8011
+      - AggregatorUrl=http://host.docker.internal:8001
+      - SignalrHubUrl=http://host.docker.internal:8009
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  basket.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - HOSTNAMERABBIT=rabbitmq
+      - IdentityUrl=http://host.docker.internal:8011
+      - GRPC_PORT=81
+      - PORT=80
+      - PATH_BASE=/basket.api
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  book.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - HOSTNAMERABBIT=rabbitmq
+      - IdentityUrl=http://host.docker.internal:8011
+      - PictureUrl=http://host.docker.internal:8005/api/book/items/[0]/pic/
+      - GRPC_PORT=81
+      - PORT=80
+      - PATH_BASE=/book.api
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  borrowing.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - HOSTNAMERABBIT=rabbitmq
+      - IdentityUrl=http://host.docker.internal:8011
+      - GRPC_PORT=81
+      - PORT=80
+      - PATH_BASE=/borrowing.api
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  borrowing.backgroundtask:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - HOSTNAMERABBIT=rabbitmq
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  borrownotification.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - HOSTNAMERABBIT=rabbitmq
+      - IdentityUrl=http://host.docker.internal:8011
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  identityserver:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - MvcClientUrl=http://host.docker.internal:8003
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
