@@ -1,4 +1,4 @@
-# Microservices
+# Microservices with .NET Core 6.0
 Build Book store system using .NET core 6.0 and Microservices Architecture
 - RabbitMQ for events management
 - Resdis for caching database
